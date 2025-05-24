@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Aziz Phone Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <div class="container position-relative">
+            <!-- Hamburger (left on mobile) -->
+            <button class="navbar-toggler order-1 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Logo (center on mobile, left on desktop) -->
+            <a class="navbar-brand mx-auto mx-lg-0 order-2" href="index.html">
+                <div class="logo-container">
+                    <img src="./images/aziz logo.webp" alt="Aziz Phone Hub">
+                </div>
+            </a>
+            <!-- Cart Icon (right on mobile) -->
+            <div class="d-lg-none order-3 position-absolute end-0 top-50 translate-middle-y" style="right: 1rem;">
+                <a href="cart.html" class="nav-link p-0">
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <span class="cart-count-badge" id="mobile-nav-cart-count">0</span>
+                </a>
+            </div>
+            <!-- Navbar links and search (desktop) -->
+            <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Electronics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Fashion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+                <!-- Desktop Search Box -->
+                <form class="d-none d-lg-flex ms-3 search-box-form" role="search">
+                    <div class="search-box w-100">
+                        <input type="text" placeholder="Search products..." aria-label="Search">
+                        <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+                <!-- Cart Icon (desktop) -->
+                <a href="cart.html" class="nav-link d-none d-lg-block ms-3 position-relative">
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <span class="cart-count-badge" id="desktop-nav-cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Search Box -->
+    <div class="container d-lg-none mt-2">
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary filter-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterPanel">
+                <i class="fas fa-filter"></i> Filters
+            </button>
+            <form class="search-box-form flex-grow-1" role="search">
+                <div class="search-box w-100">
+                    <input type="text" placeholder="Search products..." aria-label="Search">
+                    <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Desktop Search Box with Filter -->
+    <div class="container d-none d-lg-block mt-2">
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary filter-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterPanel">
+                <i class="fas fa-filter"></i> Filters
+            </button>
+            <form class="search-box-form flex-grow-1" role="search">
+                <div class="search-box w-100">
+                    <input type="text" placeholder="Search products..." aria-label="Search">
+                    <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Shop Section -->
+    <section class="shop-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">All Products</h2>
+            
+            <!-- Filter Panel (Offcanvas) -->
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="filterPanel" aria-labelledby="filterPanelLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="filterPanelLabel">Filter Products</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <!-- Category Filter -->
+                    <div class="filter-group mb-4">
+                        <h5 class="mb-2">Category</h5>
+                        <select class="form-select">
+                            <option value="">All Categories</option>
+                            <option value="airpods">AirPods</option>
+                            <option value="smartwatches">Smart Watches</option>
+                            <option value="headphones">Headphones</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="shoes">Shoes</option>
+                            <option value="crocs">Crocs</option>
+                            <option value="casualwatch">Casual Watch</option>
+                        </select>
+                    </div>
+                    <!-- Price Range Filter -->
+                    <div class="filter-group mb-4">
+                        <h5 class="mb-2">Price Range</h5>
+                        <div class="d-flex gap-2">
+                            <input type="number" class="form-control" placeholder="Min" min="0">
+                            <input type="number" class="form-control" placeholder="Max" min="0">
+                        </div>
+                    </div>
+                    <!-- Sort Filter -->
+                    <div class="filter-group mb-4">
+                        <h5 class="mb-2">Sort By</h5>
+                        <select class="form-select">
+                            <option value="popularity">Popularity</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                    <!-- Apply Filters Button -->
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary">Apply Filters</button>
+                        <button class="btn btn-outline-secondary">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="row">
+                <!-- AirPods Products -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image position-relative">
+                            <button class="btn like-btn position-absolute top-0 end-0 m-2" data-product-id="airpods-pro-2">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <a href="product.html?id=airpods-pro-2">
+                                <img src="./images/airpods_pro2.jpeg" alt="AirPods Pro 2" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">AirPods Pro 2</h5>
+                            <p class="price">₹999</p>
+                            <div class="mt-auto d-flex gap-2">
+                                <button class="btn btn-primary flex-grow-1 add-to-cart" data-product-id="airpods-pro-2">Add to Cart</button>
+                                <button class="btn btn-outline-primary buy-now" data-product-id="airpods-pro-2">
+                                    <i class="fas fa-bolt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=airpods01">
+                                <img src="./images/airpods_gen4.jpg" alt="AirPods Gen 4" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">AirPods Gen 4 (ANC)</h5>
+                            <p class="price">₹1,799</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=airpods-pro-2">
+                                <img src="./images/airpods_pro2_display.png" alt="AirPods Pro 2 with Display" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">AirPods Pro 2 with Display</h5>
+                            <p class="price">₹1,499</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=airpods-3">
+                                <img src="./images/Airpods3_buds.jpeg" alt="AirPods 3rd Generation" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">AirPods 3rd Generation</h5>
+                            <p class="price">₹949</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=airpods-2">
+                                <img src="./images/Airpods2_buds.jpg" alt="AirPods 2nd Generation" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">AirPods 2nd Generation</h5>
+                            <p class="price">₹949</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=galaxy-buds-2-pro">
+                                <img src="./images/galaxy_buds_2pro.jpeg" alt="Galaxy Buds 2 Pro" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Samsung Galaxy Buds 2 Pro</h5>
+                            <p class="price">₹999</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smartwatch Products -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=apple-watch-series-10">
+                                <img src="./images/smartwatch_series10.jpg" alt="Apple Watch Series 10" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Apple Watch Series 10</h5>
+                            <p class="price">₹1,799</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=samsung-watch-ultra">
+                                <img src="./images/smartwatch_samsung_ultra.jpg" alt="Samsung watch Ultra" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Samsung watch Ultra</h5>
+                            <p class="price">₹1,499</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=t10-ultra">
+                                <img src="./images/smartwatch_hk9.jpg" alt="HK9 Ultra" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">HK9 Ultra</h5>
+                            <p class="price">₹2,199</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=active-2-smartwatch">
+                                <img src="./images/smartwatch_active2.jpeg" alt="Active 2 Smartwatch" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Active 2 Smartwatch</h5>
+                            <p class="price">₹1,499</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=gen-9-pro">
+                                <img src="./images/smartwatch_gen16pro.jpeg" alt="Gen 16 Pro Smartwatch" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Gen 16 Pro Smartwatch</h5>
+                            <p class="price">₹1,499</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=gen-9-pro">
+                                <img src="./images/smartwatch_gen9pro.jpeg" alt="Gen 9 Pro Bluetooth Calling Smartwatch" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Gen 9 Pro Bluetooth Calling Smartwatch</h5>
+                            <p class="price">₹1,450</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=z86-pro-max">
+                                <img src="./images/smartwatch_s9promax.jpeg" alt="S9 Pro Max Smartwatch" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">S9 Pro Max Smartwatch</h5>
+                            <p class="price">₹999</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=t10-ultra">
+                                <img src="./images/smartwatch_t10ultra.jpeg" alt="T10 Ultra Bluetooth Smartwatch" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">T10 Ultra Bluetooth Smartwatch</h5>
+                            <p class="price">₹649</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=x90-max">
+                                <img src="./images/smartwatch_x90max.jpeg" alt="X90 Max Bluetooth Smartwatch" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">X90 Max Bluetooth Smartwatch</h5>
+                            <p class="price">₹899</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=z86-pro-max">
+                                <img src="./images/smartwatch_z86promax.jpeg" alt="Z86 Pro Max Smartwatch" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Z86 Pro Max Smartwatch</h5>
+                            <p class="price">₹1,599</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Headphones Products -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=airpods-max">
+                                <img src="./images/headphone_airpods_max.jpg" alt="Apple Airpods Max" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Apple Airpods Max</h5>
+                            <p class="price">₹1,499</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="./headphones/bose-qc-ultra.html">
+                                <img src="./images/headphone_bose_qc_ultra.jpg" alt="Bose Qc Ultra" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Bose Qc Ultra</h5>
+                            <p class="price">₹1,799</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MagSafe Products -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=magsafe">
+                                <img src="./images/magsafe.jpeg" alt="Apple MagSafe Battery Pack" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Apple MagSafe Battery Pack 5000 Mah</h5>
+                            <p class="price">₹799</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shoes Products -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=nike-airmax">
+                                <img src="./images/shoes_nike_airmax.jpg" alt="Nike Air Max" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Nike Air Max 2025 TL 2.5</h5>
+                            <p class="price">₹2,199</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=nike-vomero-black">
+                                <img src="./images/shoes_nike_vomero_black.jpg" alt="Nike Zoom Vomero Triple Black" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Nike Zoom Vomero Triple Black</h5>
+                            <p class="price">₹1,999</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=nike-vomero-white">
+                                <img src="./images/shoes_nike_vomero_white.jpg" alt="Nike Zoom Vomero White-Black" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Nike Zoom Vomero White-Black</h5>
+                            <p class="price">₹1,999</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=puma-suede-crush">
+                                <img src="./images/shoes_puma_suede.jpg" alt="Puma XL Suede Crush Black White" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Puma XL Suede Crush Black White</h5>
+                            <p class="price">₹1,899</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=nike-dunk-unc">
+                                <img src="./images/shoes_nike_dunk.jpg" alt="Nike Dunk Low UNC" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Nike Dunk Low UNC</h5>
+                            <p class="price">₹2,000</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crocs Products -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=literide-360">
+                                <img src="./images/crocs_literide360.jpeg" alt="Croce Literide 360" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Croce Literide 360</h5>
+                            <p class="price">₹1,799</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=bayband">
+                                <img src="./images/crocs_bayband.jpeg" alt="Crocs Bayband" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Crocs Bayband</h5>
+                            <p class="price">₹1,899</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=yukon">
+                                <img src="./images/crocs_yukon.jpeg" alt="Crocs Yukon" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Crocs Yukon</h5>
+                            <p class="price">₹1,999</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=echo-clog">
+                                <img src="./images/crocs_echo_clog.jpeg" alt="Crocs Echo Clog" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Crocs Echo Clog</h5>
+                            <p class="price">₹1,799</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=bayband-slide">
+                                <img src="./images/crocs_bayband_slide.jpeg" alt="Crocs Bayband Slide" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Crocs Bayband Slide</h5>
+                            <p class="price">₹1,899</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=bayband-flip">
+                                <img src="./images/crocs_bayband_flip.jpeg" alt="Crocs Bayband Flip" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Crocs Bayband Flip</h5>
+                            <p class="price">₹1,699</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Casual Watch Products -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=tissot-trace">
+                                <img src="./images/watch_tissot.jpg" alt="Tissot T-race" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tissot T-race Chronograph</h5>
+                            <p class="price">₹1,599</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=gshock-manga">
+                                <img src="./images/watch_gshock.jpg" alt="G-shock Manga Edition" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">G-shock Manga Edition</h5>
+                            <p class="price">₹1,799</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=cartier-roman">
+                                <img src="./images/watch_cartier.jpg" alt="Cartier Roman Dial" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Cartier Roman Dial</h5>
+                            <p class="price">₹2,049</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=omega-seamaster">
+                                <img src="./images/watch_omega.jpg" alt="Omega Seamaster Diver 300m" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Omega Seamaster Diver 300m</h5>
+                            <p class="price">₹3,299</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=boss-hugo">
+                                <img src="./images/watch_boss.jpg" alt="Hugo Boss" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Boss Hugo</h5>
+                            <p class="price">₹1,899</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More Products -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=apple-power-adapter">
+                                <img src="./images/moreproduct_adapter.jpg" alt="Apple Adapter" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Apple 20W USB-C Power Adapter</h5>
+                            <p class="price">₹799</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=type-c-lightning-cable">
+                                <img src="./images/moreproduct_cable.jpg" alt="Type C to Lightning Cable" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Apple Type C to Lightning Cable</h5>
+                            <p class="price">₹399</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add remaining products from moreproducts.html -->
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        <div class="product-image">
+                            <a href="product.html?id=type-c-cable">
+                                <img src="./images/moreproduct_cable_C.jpeg" alt="Type C to Type C Cable" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Apple Type C to Type C Cable</h5>
+                            <p class="price">₹450</p>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fixed Bottom Sort and Filter Bar -->
+    <div class="fixed-bottom-sort-filter d-lg-none">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterPanel">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#sortPanel">
+                        <i class="fas fa-sort"></i> Sort
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sort Panel (Offcanvas) -->
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="sortPanel" aria-labelledby="sortPanelLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="sortPanelLabel">Sort By</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="sort-options">
+                <button class="btn btn-outline-primary w-100 mb-2">Popularity</button>
+                <button class="btn btn-outline-primary w-100 mb-2">Price: Low to High</button>
+                <button class="btn btn-outline-primary w-100 mb-2">Price: High to Low</button>
+                <button class="btn btn-outline-primary w-100">Newest First</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Bottom Navigation Footer -->
+    <footer class="fixed-bottom-footer d-lg-none">
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col text-center">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i><span>Home</span>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a href="shop.html" class="nav-link active">
+                        <i class="fas fa-shop"></i><span>Shop</span>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a href="wishlist.html" class="nav-link">
+                        <i class="fas fa-heart"></i><span>Wishlist</span>
+                        <span class="wishlist-count-badge" id="mobile-wishlist-count">0</span>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a href="profile.html" class="nav-link">
+                        <i class="fas fa-user"></i><span>Profile</span>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a href="cart.html" class="nav-link">
+                        <i class="fas fa-shopping-cart"></i><span>Cart</span>
+                        <span class="cart-count-badge" id="mobile-cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="products.js"></script>
+    <script src="search.js"></script>
+    <script src="cart.js"></script>
+    <script src="shop-script.js"></script>
+</body>
+</html> 
